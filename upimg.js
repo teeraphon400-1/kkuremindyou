@@ -81,13 +81,15 @@ import {getStorage, ref as sRef, uploadBytesResumable, getDownloadURL} from "htt
       UploadTask.on('state-changed', (snapshot) =>{
           var progess = (snapshot.bytesTransferred / snapshot.totalBytes)*100;
           proglab.innerHTML = "Upload " + progess + "%";
+          
       },
       (error) => {
         alert("error : Image not Uploaded! ");
       },
       ()=> {
         getDownloadURL(UploadTask.snapshot.ref).then((downloadURL) =>{
-          console.log(downloadURL);
+          alert("สร้างบัญชีเรียบร้อย/success!")
+          window.location.href = "index.html";
         });
       }
       );

@@ -1,5 +1,5 @@
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
-import {getAuth,createUserWithEmailAndPassword,onAuthStateChanged,signOut,signInWithEmailAndPassword} from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
+import {getAuth,createUserWithEmailAndPassword,onAuthStateChanged,signInWithEmailAndPassword} from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
   
 const firebaseConfig = {
     apiKey: "AIzaSyCpUOWJ6Y5AI3QQakEwUqVsh2_7A4BfJHY",
@@ -19,11 +19,11 @@ const firebaseConfig = {
   const formarea = document.getElementById("form-area")
   const profile = document.getElementById("profile")
   const welcome = document.getElementById("welcome")
-  const logout=document.getElementById("logout")
   const loginForm = document.getElementById("loginForm")
-
+  
+  
+  //login
   onAuthStateChanged(auth,(user)=>{
-    //login
     if(user){
         profile.style.display="block"
         formarea.style.display="none"
@@ -41,20 +41,8 @@ loginForm.addEventListener("submit",(e)=>{
     const password = loginForm.password.value
     signInWithEmailAndPassword(auth,email,password)
     .then((result)=>{
-        window.location.href = "home.html";
+        window.location.href = "home/home.html";
     }).catch((error)=>{
         alert("กรุณาใส่ email และ password ให้ถูกต้อง")
-    })
-})
-
-form.addEventListener("submit",(e)=>{
-    e.preventDefault()
-    const email = form.email.value
-    const password = form.password.value
-    createUserWithEmailAndPassword(auth,email,password,)
-    .then((result)=>{
-        alert("สร้างบัญชีผู้ใช้เรียบร้อย")
-    }).catch((error)=>{
-        alert(error.message)
     })
 })

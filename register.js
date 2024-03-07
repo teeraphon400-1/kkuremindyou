@@ -1,6 +1,7 @@
 // Import the functions from the SDKs 
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-app.js";
 import { getFirestore , collection, getDocs,addDoc,doc,updateDoc, setDoc} from "https://www.gstatic.com/firebasejs/10.8.1/firebase-firestore.js";
+import {getAuth,createUserWithEmailAndPassword} from "https://www.gstatic.com/firebasejs/10.8.1/firebase-auth.js";
 const firebaseConfig = {
   apiKey: "AIzaSyCpUOWJ6Y5AI3QQakEwUqVsh2_7A4BfJHY",
   authDomain: "trydatabase-2a1ed.firebaseapp.com",
@@ -14,7 +15,8 @@ const firebaseConfig = {
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
 const db = getFirestore(app)
-const table = document.getElementById("table")
+const auth = getAuth(app)
+//const table = document.getElementById("table")
 const form = document.getElementById("addForm")
 
 //collection ref
@@ -31,6 +33,28 @@ getDocs(colRef)
     }).catch(err =>{
         console.log(err.message)
     })
+// adding document
+form.addEventListener('submit', (e) => {
+    e.preventDefault()
+    addDoc(colRef,{
+        email: form.email.value ,
+        password: form.password.value,
+        account_name:form.account_name.value,
+        
+    })
+    const email = form.email.value
+    const password = form.password.value
+    createUserWithEmailAndPassword(auth,email,password)
+    .then(() =>{
+        form.reset()
+        //alert("สร้างบัญชีเรียบร้อย/success!")
+        window.location.href = "upimg.html";
+    }).catch((error)=>{
+        alert("กรุณาใส่ email และ passwordจะต้องไม่ต่ำกว่า 6 ตัวอักษร")
+    })
+})
+
+
 
 //ดึงข้อมูล
 /*async function getAdmin(db){
